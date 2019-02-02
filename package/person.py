@@ -37,6 +37,17 @@ class Person(Resource):
         person_last_name = personInput['person_last_name']
         person_ph_no = personInput['person_ph_no']
         conn.execute("UPDATE contacts SET person_first_name=?,person_last_name=?,person_ph_no=?, WHERE person_email=?",
-                     (person_first_name, person_last_name, person_ph_no,email))
+                     (person_first_name, person_last_name, person_ph_no, person_email))
+        conn.commit()
+        return personInput
+
+    def post(self):
+        personInput = request.get_json(force=True)
+        person_email=personInput['person_email']
+        person_first_name=personInput['person_first_name']
+        person_last_name = personInput['person_last_name']
+        person_ph_no = personInput['person_ph_no']
+        personInput['person_id']=conn.execute('''INSERT INTO contacts(person_email,person_first_name,person_last_name,person_ph_no)
+            VALUES(?,?,?,?,?)''', (person_email, person_first_name, person_last_name, person_ph_no)).lastrowid
         conn.commit()
         return personInput

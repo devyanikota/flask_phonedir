@@ -1,5 +1,5 @@
-from flask import Flask,send_from_directory,render_template
-from flask_restful import Resource, Api
+from flask import Flask
+from flask_restful import Api
 from package.person import People, Person
 import json
 
@@ -11,8 +11,8 @@ app = Flask(__name__)
 api = Api(app)
 
 api.add_resource(People, '/people')
-api.add_resource(Person, '/person/<string:email>')
-api.add_resource(Person, '/person/<string:name>')
+api.add_resource(Person, '/person/email/<string:email>')
+# api.add_resource(Person, '/person/<string:name>')
 
 @app.route('/')
 def index():
